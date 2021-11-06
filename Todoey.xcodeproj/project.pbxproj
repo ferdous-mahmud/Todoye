@@ -58,6 +58,7 @@
 		0CBADFA62736B3FA0032F5BB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EB2BE504239524DC00FB933B /* LaunchScreen.storyboard */,
 				EB2BE4FF239524DB00FB933B /* Main.storyboard */,
 			);
 			path = View;
@@ -88,7 +89,6 @@
 				0CBADFA52736B3F10032F5BB /* Controller */,
 				0C47A30627366EAE007F9BB0 /* Constants.swift */,
 				EB2BE502239524DC00FB933B /* Assets.xcassets */,
-				EB2BE504239524DC00FB933B /* LaunchScreen.storyboard */,
 				EB2BE507239524DC00FB933B /* Info.plist */,
 			);
 			path = Todoey;
