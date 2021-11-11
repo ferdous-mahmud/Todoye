@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
@@ -15,9 +16,8 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         // Loading percistance data
-        //loadItems()
+        loadItems()
     }
     
     //MARK: - TableView datasourse methods
@@ -91,30 +91,25 @@ class TodoListViewController: UITableViewController {
     
     // Save items data
     func saveItems() {
-       
         do{
             try context.save()
         }
         catch{
             print("Error saving context! \(error) ")
         }
-        
         self.tableView.reloadData()
     }
     
     // Load saved items
-//    func loadItems(){
-//        if let data = try? Data(contentsOf: dataFilePath!){
-//            let decoder = PropertyListDecoder()
-//
-//            do{
-//                itemArray = try decoder.decode([Item].self, from: data)
-//            }
-//            catch{
-//                print("Error decodint item array \(error)")
-//            }
-//        }
-//    }
+    func loadItems(){
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do{
+            itemArray =  try context.fetch(request)
+        }
+        catch{
+            print("Error fetching data form context  \(error)")
+        }
+    }
 
 }
 
