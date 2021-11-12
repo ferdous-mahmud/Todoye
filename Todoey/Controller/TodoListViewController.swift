@@ -43,6 +43,9 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
+        
         // Row checkmark selection & deselection
         itemArray[indexPath.row].checkStatus = !itemArray[indexPath.row].checkStatus
         
@@ -91,6 +94,7 @@ class TodoListViewController: UITableViewController {
     
     // Save items data
     func saveItems() {
+        
         do{
             try context.save()
         }
@@ -101,15 +105,43 @@ class TodoListViewController: UITableViewController {
     }
     
     // Load saved items
-    func loadItems(){
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+        
         do{
             itemArray =  try context.fetch(request)
         }
         catch{
             print("Error fetching data form context  \(error)")
         }
+        tableView.reloadData()
     }
 
+}
+
+
+//MARK: - Search bar controller
+extension TodoListViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == ""{
+
+            loadItems()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+        else{
+            
+            let request : NSFetchRequest<Item> = Item.fetchRequest()
+            
+            request.predicate = NSPredicate(format: "itemTitle CONTAINS[cd] %@", searchBar.text!)
+            
+            request.sortDescriptors = [NSSortDescriptor(key: "itemTitle", ascending: true)]
+             
+            loadItems(with: request)
+        }
+    }
 }
 
