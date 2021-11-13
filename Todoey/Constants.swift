@@ -7,5 +7,7 @@
 //
 
 struct S{
-    static let TODO_LIST_ARRAY = "TodoListArray"
+    static let DATA_MODEL_NAME = "DataModel"
+    static let CATAGORY_CELL = "CatagoryCell"
+    static let TODO_ITEM_CELL  = "ToDoItemCell"
 }
