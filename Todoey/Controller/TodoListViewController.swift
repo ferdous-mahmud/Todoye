@@ -28,7 +28,7 @@ class TodoListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-       let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: S.TODO_ITEM_CELL, for: indexPath)
         
         let item = itemArray[indexPath.row]
 
@@ -65,10 +65,14 @@ class TodoListViewController: UITableViewController {
             if let text = textField.text{
                 
                 if text == ""{
-                    let newItem = Item(context: self.context)
-                    newItem.itemTitle = text
-                    newItem.checkStatus = false
-                    self.itemArray.append(newItem)
+                    // create the alert
+                    let alert = UIAlertController(title: "Error!", message: "Empty item title", preferredStyle: UIAlertController.Style.alert)
+
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
                 }
                 else{
                     let newItem = Item(context: self.context)
@@ -144,4 +148,3 @@ extension TodoListViewController: UISearchBarDelegate {
         }
     }
 }
-
