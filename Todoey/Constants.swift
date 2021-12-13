@@ -10,4 +10,5 @@ struct S{
     static let DATA_MODEL_NAME = "DataModel"
     static let CATAGORY_CELL = "CatagoryCell"
     static let TODO_ITEM_CELL  = "ToDoItemCell"
+    static let GOTO_ITEMS = "goToItems"
 }

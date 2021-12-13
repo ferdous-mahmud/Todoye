@@ -40,6 +40,20 @@ class CatagoryViewController: UITableViewController {
         return cell
     }
     
+    //MARK: - TableView Delegates methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: S.GOTO_ITEMS, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! TodoListViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow{
+            destinationVC.selectedCategory = catagoryArray[indexPath.row]
+        }
+    }
+    
     
     
     //MARK: - Data menupulation mehtods
@@ -110,10 +124,4 @@ class CatagoryViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
 
     }
-    
-    //MARK: - TableView Delegates methods
-    
-    
-    
-    
 }
