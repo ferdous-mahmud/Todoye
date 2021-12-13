@@ -11,13 +11,16 @@ import CoreData
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
+    
+    var selectedCategory : Catagory? {
+        didSet{
+            loadItems()
+        }
+    }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Loading percistance data
-        loadItems()
     }
     
     //MARK: - TableView datasourse methods
@@ -42,9 +45,6 @@ class TodoListViewController: UITableViewController {
     //MARK: - TableView delegate mehtod
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
         
         // Row checkmark selection & deselection
         itemArray[indexPath.row].checkStatus = !itemArray[indexPath.row].checkStatus
@@ -78,6 +78,7 @@ class TodoListViewController: UITableViewController {
                     let newItem = Item(context: self.context)
                     newItem.itemTitle = text
                     newItem.checkStatus = false
+                    newItem.parentCatagory = self.selectedCategory
                     self.itemArray.append(newItem)
                 }
                 
