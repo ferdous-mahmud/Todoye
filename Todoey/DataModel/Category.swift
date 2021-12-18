@@ -1,5 +1,5 @@
 //
-//  data.swift
+//  Catagory.swift
 //  Todoey
 //
 //  Created by Ferdous Mahmud Akash on 12/18/21.
@@ -9,7 +9,10 @@
 import Foundation
 import RealmSwift
 
-class Data: Object{
+class Category: Object{
     @objc dynamic var name: String = ""
-    @objc dynamic var age: Int = 0
+    
+    // Forword relation
+    let items = List<Item>()
 }
+
