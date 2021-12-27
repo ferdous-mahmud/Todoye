@@ -19,7 +19,6 @@ class TodoListViewController: UITableViewController {
             loadItems()
         }
     }
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +39,7 @@ class TodoListViewController: UITableViewController {
             cell.accessoryType = item.checkStatus ? .checkmark : .none
         }
         else{
-            cell.textLabel?.text = "No Items added"
+            cell.textLabel?.text = "No Items added yet"
         }
        return cell
     }
