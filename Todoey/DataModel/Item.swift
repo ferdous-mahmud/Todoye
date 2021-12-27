@@ -13,6 +13,7 @@ import RealmSwift
 class Item: Object{
     @objc dynamic var checkStatus: Bool = false
     @objc dynamic var itmeTitle: String = ""
+    @objc dynamic var dateCreated: Date = Date()
     
     // Backword relation
     var parentCategory = LinkingObjects(fromType: Category.self, property: "items")

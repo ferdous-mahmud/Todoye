@@ -87,7 +87,7 @@ class TodoListViewController: UITableViewController {
                 else{
                     let newItem = Item()
                     newItem.itmeTitle = text
-            
+
                     self.saveItems(item: newItem)
                 }
             }
@@ -121,7 +121,7 @@ class TodoListViewController: UITableViewController {
     
     // Load saved items
     func loadItems(){
-        itemArray = selectedCategory?.items.sorted(byKeyPath: "itmeTitle", ascending: true)
+        itemArray = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
         tableView.reloadData()
     }
 
@@ -129,27 +129,23 @@ class TodoListViewController: UITableViewController {
 
 
 //MARK: - Search bar controller
-//extension TodoListViewController: UISearchBarDelegate {
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//
-//        if searchBar.text == ""{
-//
-//            loadItems()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//        }
-//        else{
-//
-//            let request : NSFetchRequest<Item> = Item.fetchRequest()
-//
-//            let predicate = NSPredicate(format: "itemTitle CONTAINS[cd] %@", searchBar.text!)
-//
-//            request.sortDescriptors = [NSSortDescriptor(key: "itemTitle", ascending: true)]
-//
-//            loadItems(with: request, predicate: predicate)
-//        }
-//    }
-//}
+
+extension TodoListViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        if searchBar.text == ""{
+
+            loadItems()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+        else{
+            
+            itemArray = itemArray?.filter("itmeTitle CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+            tableView.reloadData()
+        }
+    }
+}
