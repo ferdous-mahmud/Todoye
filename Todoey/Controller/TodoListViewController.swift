@@ -50,9 +50,16 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Row checkmark selection & deselection
-        itemArray![indexPath.row].checkStatus = !itemArray![indexPath.row].checkStatus
-        
-        //self.saveItems()
+        if let item = itemArray?[indexPath.row] {
+            do {
+                try realm.write {
+                    item.checkStatus = !item.checkStatus
+                }
+            }catch{
+                print("Error saving check status \(error)")
+            }
+        }
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
