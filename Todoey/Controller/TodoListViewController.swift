@@ -5,10 +5,13 @@
 //  Created by Ferdous Mahmud on 11/05/2021.
 //
 
+// TODO: fix child item not deleted bug when parent item deleted
+// Realm DB
+
 import UIKit
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     
@@ -22,6 +25,8 @@ class TodoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = 60.0
     }
     
     //MARK: - TableView datasourse methods
@@ -32,7 +37,7 @@ class TodoListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: S.TODO_ITEM_CELL, for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
 
         if let item = itemArray?[indexPath.row] {
             cell.textLabel?.text = item.itmeTitle
@@ -102,6 +107,8 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //MARK: - Data manipulation methods
+    
     // Save items data
     func saveItems(item: Item) {
         
@@ -122,6 +129,19 @@ class TodoListViewController: UITableViewController {
     func loadItems(){
         itemArray = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: true)
         tableView.reloadData()
+    }
+    
+    
+    // Delete data form swipe
+    override func updateModel(at indexpath: IndexPath) {
+        do{
+            try realm.write{
+                realm.delete(itemArray![indexpath.row])
+            }
+        }
+        catch{
+            print("Error deleting category on Realm! \(error) ")
+        }
     }
 
 }
