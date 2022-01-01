@@ -16,6 +16,8 @@ class TodoListViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var itemArray: Results<Item>?
     
     var selectedCategory : Category? {
@@ -29,6 +31,14 @@ class TodoListViewController: SwipeTableViewController {
         
         tableView.rowHeight = 60.0
         tableView.separatorStyle = .none
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let colorHex = selectedCategory?.color{
+            title = selectedCategory!.name
+            searchBar.barTintColor = UIColor(hexString: colorHex)
+            navigationController?.navigationBar.backgroundColor = UIColor(hexString: colorHex)
+        }
     }
     
     //MARK: - TableView datasourse methods
